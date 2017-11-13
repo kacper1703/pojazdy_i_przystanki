@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import Alamofire
 
-class ViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, GMUClusterRendererDelegate {
+class ViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var mapView: GMSMapView! {
         didSet {
             mapView.isBuildingsEnabled = false
@@ -19,6 +19,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDel
             mapView.settings.compassButton = true
             mapView.settings.myLocationButton = true
             mapView.settings.tiltGestures = false
+            mapView.addObserver(self, forKeyPath: #keyPath(GMSMapView.selectedMarker), options: .new, context: nil)
         }
     }
 
@@ -42,58 +43,60 @@ class ViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDel
         self.mapView.camera = camera
     }
 
-    func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
-        if marker.userData is Stop {
-            marker.icon = Asset.stop.image
-        } else if let vehicle = marker.userData as? Vehicle {
-            marker.icon = vehicle.icon
-        }
-    }
-
-    func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
-        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position,
-                                                 zoom: mapView.camera.zoom + 1)
-        let update = GMSCameraUpdate.setCamera(newCamera)
-        mapView.moveCamera(update)
-        return true
-    }
-
-    func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
-        return false
-    }
-
     var infoWindow: VehicleDetailsView?
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         guard let vehicle = marker.userData as? Vehicle else { return false }
         if infoWindow == nil {
-            let newInfoWindow = Bundle.loadViewFromNib(withType: VehicleDetailsView.self)
-            let infoWindowHeight = newInfoWindow.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-            newInfoWindow.frame = CGRect(x: view.frame.minX,
-                                         y: view.frame.maxY,
-                                         width: view.frame.width,
-                                         height: infoWindowHeight)
-            self.view.addSubview(newInfoWindow)
-            infoWindow = newInfoWindow
-            infoWindow?.configure(with: vehicle)
-            setInfoWindow(hidden: false)
+            DispatchQueue.main.async {
+                let newInfoWindow = Bundle.loadViewFromNib(withType: VehicleDetailsView.self)
+                let infoWindowHeight = newInfoWindow.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+                let panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture))
+                newInfoWindow.addGestureRecognizer(panRecognizer)
+                let frame = self.view.frame
+                newInfoWindow.frame = CGRect(x: frame.minX,
+                                             y: frame.maxY,
+                                             width: frame.width,
+                                             height: infoWindowHeight)
+                self.view.addSubview(newInfoWindow)
+                newInfoWindow.configure(with: vehicle)
+                self.infoWindow = newInfoWindow
+                self.setInfoWindow(hidden: false)
+            }
         } else {
             infoWindow?.configure(with: vehicle)
         }
-        
         return true
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard let change = change else {return }
+
+        let newMarker = change[NSKeyValueChangeKey.newKey] as? GMSMarker
+
     }
 
     func setInfoWindow(hidden: Bool) {
         if hidden {
-            
-            UIView.animate(withDuration: 1.0) {
-                self.infoWindow?.frame.origin.y += self.infoWindow?.frame.height ?? 0
-            }
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 0.8,
+                           initialSpringVelocity: 10,
+                           options: UIViewAnimationOptions.curveEaseOut,
+                           animations: {
+                            guard let infoWindow = self.infoWindow else { return }
+                            infoWindow.frame.origin.y = self.view.frame.maxY
+            }, completion: nil)
         } else {
-            UIView.animate(withDuration: 1.0) {
-                self.infoWindow?.frame.origin.y -= self.infoWindow?.frame.height ?? 0
-            }
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 0.8,
+                           initialSpringVelocity: 10,
+                           options: UIViewAnimationOptions.curveEaseOut,
+                           animations: {
+                            guard let infoWindow = self.infoWindow else { return }
+                            infoWindow.frame.origin.y = self.view.frame.maxY - infoWindow.frame.height
+            }, completion: nil)
         }
     }
 
@@ -107,6 +110,27 @@ class ViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDel
 //        show(linePicker, sender: nil)
 //    }
 //
+
+    let animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut)
+
+    @objc func handlePanGesture(_ sender: Any?) {
+        guard let recognizer = sender as? UIPanGestureRecognizer else { return }
+
+        switch  recognizer.state {
+        case .began:
+            animator.addAnimations {
+                self.infoWindow?.frame.origin.y = self.view.frame.height
+            }
+        case .changed:
+            let fraction = recognizer.translation(in: self.view).y / (self.infoWindow?.frame.height ?? 1)
+            animator.fractionComplete = fraction
+        case .ended:
+            animator.isReversed = recognizer.velocity(in: self.view).y < 0
+            animator.startAnimation()
+        default:
+            break
+        }
+    }
 
 
 }
@@ -181,5 +205,29 @@ extension ViewController: VehiclesManagerDelegate {
 
     func manager(manager: VehiclesManager, didFailWith error: Error) {
 
+    }
+}
+
+extension ViewController: GMUClusterRendererDelegate {
+    func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
+        if marker.userData is Stop {
+            marker.icon = Asset.stop.image
+        } else if let vehicle = marker.userData as? Vehicle {
+            marker.icon = vehicle.icon
+        }
+    }
+}
+
+extension ViewController: GMUClusterManagerDelegate {
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
+        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position,
+                                                 zoom: mapView.camera.zoom + 1)
+        let update = GMSCameraUpdate.setCamera(newCamera)
+        mapView.moveCamera(update)
+        return true
+    }
+
+    func clusterManager(_ clusterManager: GMUClusterManager, didTap clusterItem: GMUClusterItem) -> Bool {
+        return false
     }
 }

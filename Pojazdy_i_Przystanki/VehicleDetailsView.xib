@@ -164,14 +164,8 @@
                 <outlet property="routeLabel" destination="bXa-Ki-zps" id="1UO-EW-nvE"/>
                 <outlet property="showRouteButton" destination="QXj-w7-jtv" id="PRv-TK-XAq"/>
                 <outlet property="visualEffectView" destination="BYc-On-Brf" id="rk4-Pe-ozj"/>
-                <outletCollection property="gestureRecognizers" destination="d3Z-yk-Rgw" appends="YES" id="6KQ-eW-mD8"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="251.5"/>
         </view>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="d3Z-yk-Rgw">
-            <connections>
-                <action selector="handlePan:" destination="iN0-l3-epB" id="sgP-Du-JmL"/>
-            </connections>
-        </panGestureRecognizer>
     </objects>
 </document>
