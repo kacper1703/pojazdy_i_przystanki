@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="VehicleAnnotationView" customModule="Pojazdy_i_Przystanki" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="242" height="98"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Plac Żołnierza Plac Żołnierza " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wlg-xT-QFP">
+                    <rect key="frame" x="5" y="39" width="232" height="18"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pEk-KZ-q7i">
+                    <rect key="frame" x="5" y="5" width="12" height="31.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="-1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvy-KB-dWr" customClass="PunctualityLabel" customModule="Pojazdy_i_Przystanki" customModuleProvider="target">
+                    <rect key="frame" x="219" y="9" width="18" height="24"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Plac Żołnierza Plac Żołnierza " textAlignment="natural" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ppu-Wh-yeo">
+                    <rect key="frame" x="5" y="62" width="232" height="18"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="zvy-KB-dWr" secondAttribute="trailing" constant="5" id="60l-nf-KTk"/>
+                <constraint firstItem="pEk-KZ-q7i" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="B8Y-Vn-XCO"/>
+                <constraint firstItem="ppu-Wh-yeo" firstAttribute="top" secondItem="Wlg-xT-QFP" secondAttribute="bottom" constant="5" id="D78-E8-8xi"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ppu-Wh-yeo" secondAttribute="bottom" constant="5" id="Hew-FL-BcK"/>
+                <constraint firstItem="ppu-Wh-yeo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="HfB-LZ-3nF"/>
+                <constraint firstItem="Wlg-xT-QFP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="OZz-k5-doi"/>
+                <constraint firstItem="pEk-KZ-q7i" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="R2w-WS-8mE"/>
+                <constraint firstItem="zvy-KB-dWr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pEk-KZ-q7i" secondAttribute="trailing" constant="10" id="d2d-sE-9Qb"/>
+                <constraint firstItem="Wlg-xT-QFP" firstAttribute="top" secondItem="pEk-KZ-q7i" secondAttribute="bottom" constant="3" id="fix-hn-tg4"/>
+                <constraint firstAttribute="trailing" secondItem="ppu-Wh-yeo" secondAttribute="trailing" constant="5" id="fyx-Q4-1uP"/>
+                <constraint firstItem="zvy-KB-dWr" firstAttribute="centerY" secondItem="pEk-KZ-q7i" secondAttribute="centerY" id="hSU-KW-3v7"/>
+                <constraint firstAttribute="trailing" secondItem="Wlg-xT-QFP" secondAttribute="trailing" constant="5" id="q0H-4f-4UA"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="fromLabel" destination="Wlg-xT-QFP" id="ggl-Vo-AVe"/>
+                <outlet property="lineLabel" destination="pEk-KZ-q7i" id="VnV-8D-nl7"/>
+                <outlet property="punctualityLabel" destination="zvy-KB-dWr" id="HgR-Tr-mUR"/>
+                <outlet property="toLabel" destination="ppu-Wh-yeo" id="wHH-Xj-dgL"/>
+            </connections>
+            <point key="canvasLocation" x="-34" y="-598"/>
+        </view>
+    </objects>
+</document>
