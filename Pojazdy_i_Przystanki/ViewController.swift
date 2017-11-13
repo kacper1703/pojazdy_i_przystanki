@@ -70,20 +70,31 @@ class ViewController: UIViewController, GMSMapViewDelegate, GMUClusterManagerDel
             let newInfoWindow = Bundle.loadViewFromNib(withType: VehicleDetailsView.self)
             let infoWindowHeight = newInfoWindow.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             newInfoWindow.frame = CGRect(x: view.frame.minX,
-                                         y: view.frame.maxX,
+                                         y: view.frame.maxY,
                                          width: view.frame.width,
                                          height: infoWindowHeight)
             self.view.addSubview(newInfoWindow)
             infoWindow = newInfoWindow
             infoWindow?.configure(with: vehicle)
-            UIView.animate(withDuration: 1.0) {
-                self.infoWindow?.frame.origin.y -= infoWindowHeight
-            }
+            setInfoWindow(hidden: false)
         } else {
             infoWindow?.configure(with: vehicle)
         }
         
         return true
+    }
+
+    func setInfoWindow(hidden: Bool) {
+        if hidden {
+            
+            UIView.animate(withDuration: 1.0) {
+                self.infoWindow?.frame.origin.y += self.infoWindow?.frame.height ?? 0
+            }
+        } else {
+            UIView.animate(withDuration: 1.0) {
+                self.infoWindow?.frame.origin.y -= self.infoWindow?.frame.height ?? 0
+            }
+        }
     }
 
 //    @IBAction func filterButtonTapped(_ sender: Any) {

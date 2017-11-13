@@ -28,7 +28,7 @@ class VehicleDetailsView: UIView {
     @IBAction func handlePan(_ sender: UIPanGestureRecognizer) {
         if sender.state == .began || sender.state == .changed {
             guard let view = sender.view else { return }
-            let translation = sender.translation(in: self)
+            let translation = sender.translation(in: self.superview)
             if view.center.y < visualEffectView.bounds.height {
                 view.center = CGPoint(x: view.center.x,
                                       y: view.center.y + translation.y)

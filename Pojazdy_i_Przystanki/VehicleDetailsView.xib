@@ -143,9 +143,6 @@
                             <constraint firstItem="h7T-kv-ygg" firstAttribute="centerX" secondItem="cG6-I3-WTY" secondAttribute="centerX" id="O4p-mv-djC"/>
                             <constraint firstAttribute="bottomMargin" secondItem="QXj-w7-jtv" secondAttribute="bottom" id="chD-HS-HeF"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="d3Z-yk-Rgw" appends="YES" id="So1-Ha-E3E"/>
-                        </connections>
                     </view>
                     <blurEffect style="light"/>
                 </visualEffectView>
@@ -167,6 +164,7 @@
                 <outlet property="routeLabel" destination="bXa-Ki-zps" id="1UO-EW-nvE"/>
                 <outlet property="showRouteButton" destination="QXj-w7-jtv" id="PRv-TK-XAq"/>
                 <outlet property="visualEffectView" destination="BYc-On-Brf" id="rk4-Pe-ozj"/>
+                <outletCollection property="gestureRecognizers" destination="d3Z-yk-Rgw" appends="YES" id="6KQ-eW-mD8"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="251.5"/>
         </view>
