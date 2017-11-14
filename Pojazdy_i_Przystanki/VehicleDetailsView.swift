@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol DetailViewPanDelegate: class {
+    func handle(_ panGesture: UIPanGestureRecognizer)
+}
+
 class VehicleDetailsView: UIView {
     @IBOutlet private var lineLabel: UILabel!
     @IBOutlet private var punctualityLabel: UILabel!
@@ -15,7 +19,13 @@ class VehicleDetailsView: UIView {
     @IBOutlet private var nextStopLabel: UILabel!
     @IBOutlet private var routeLabel: UILabel!
     @IBOutlet private var showRouteButton: UIButton!
-    @IBOutlet private var visualEffectView: UIVisualEffectView!
+    @IBOutlet private var visualEffectView: UIVisualEffectView! {
+        didSet {
+            visualEffectView.layer.cornerRadius = 10.0
+        }
+    }
+
+    static let bottomMargin: CGFloat = 20.0
 
     func configure(with vehicle: Vehicle) {
         lineLabel.text = vehicle.line
@@ -25,20 +35,33 @@ class VehicleDetailsView: UIView {
         routeLabel.text = String(describing: vehicle.route)
     }
 
-    @IBAction func handlePan(_ sender: UIPanGestureRecognizer) {
-        if sender.state == .began || sender.state == .changed {
-            guard let view = sender.view else { return }
-            let translation = sender.translation(in: self.superview)
-            if view.center.y < visualEffectView.bounds.height {
-                view.center = CGPoint(x: view.center.x,
-                                      y: view.center.y + translation.y)
-            } else {
-                view.center = CGPoint(x: view.center.x,
-                                      y: visualEffectView.bounds.height - 1)
-            }
+    var detailsHidden: Bool = true
 
-            sender.setTranslation(CGPoint(x: 0, y: 0), in: self)
-        }
+    weak var panDelegate: DetailViewPanDelegate?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        self.addGestureRecognizer(panRecognizer)
     }
+
+    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
+        panDelegate?.handle(sender)
+//        if sender.state == .began || sender.state == .changed {
+//            guard let view = sender.view else { return }
+//            let translation = sender.translation(in: self.superview)
+//            if view.center.y < visualEffectView.bounds.height {
+//                view.center = CGPoint(x: view.center.x,
+//                                      y: view.center.y + translation.y)
+//            } else {
+//                view.center = CGPoint(x: view.center.x,
+//                                      y: visualEffectView.bounds.height - 1)
+//            }
+//
+//            sender.setTranslation(CGPoint(x: 0, y: 0), in: self)
+//        }
+    }
+
+
 
 }

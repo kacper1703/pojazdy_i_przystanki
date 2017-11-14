@@ -19,7 +19,6 @@ class ViewController: UIViewController, GMSMapViewDelegate {
             mapView.settings.compassButton = true
             mapView.settings.myLocationButton = true
             mapView.settings.tiltGestures = false
-            mapView.addObserver(self, forKeyPath: #keyPath(GMSMapView.selectedMarker), options: .new, context: nil)
         }
     }
 
@@ -28,6 +27,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     var currentLocation: CLLocation?
     private var stopsClusterManager: GMUClusterManager!
     private var vehicleClusterManager: GMUClusterManager!
+    private var selectedMarker: GMSMarker?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +35,8 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         stopsManager?.start()
         vehiclesManager = VehiclesManager(withDelegate: self)
         vehiclesManager?.start()
+        setupInfoWindow()
+        animatorSetup()
         centerOnSzczecin(animated: false)
     }
 
@@ -45,58 +47,60 @@ class ViewController: UIViewController, GMSMapViewDelegate {
 
     var infoWindow: VehicleDetailsView?
 
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        guard let vehicle = marker.userData as? Vehicle else { return false }
-        if infoWindow == nil {
-            DispatchQueue.main.async {
-                let newInfoWindow = Bundle.loadViewFromNib(withType: VehicleDetailsView.self)
-                let infoWindowHeight = newInfoWindow.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-                let panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture))
-                newInfoWindow.addGestureRecognizer(panRecognizer)
-                let frame = self.view.frame
-                newInfoWindow.frame = CGRect(x: frame.minX,
-                                             y: frame.maxY,
-                                             width: frame.width,
-                                             height: infoWindowHeight)
-                self.view.addSubview(newInfoWindow)
-                newInfoWindow.configure(with: vehicle)
-                self.infoWindow = newInfoWindow
-                self.setInfoWindow(hidden: false)
-            }
-        } else {
-            infoWindow?.configure(with: vehicle)
+    func setupInfoWindow() {
+        DispatchQueue.main.async {
+            let newInfoWindow = Bundle.loadViewFromNib(withType: VehicleDetailsView.self)
+            let infoWindowHeight = newInfoWindow.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height + VehicleDetailsView.bottomMargin
+            let frame = self.view.frame
+            newInfoWindow.frame = CGRect(x: frame.minX,
+                                         y: frame.maxY,
+                                         width: frame.width,
+                                         height: infoWindowHeight)
+            self.view.addSubview(newInfoWindow)
+            newInfoWindow.panDelegate = self
+            self.infoWindow = newInfoWindow
+
         }
+    }
+
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        if let vehicle = marker.userData as? Vehicle {
+            infoWindow?.configure(with: vehicle)
+            mapView.animate(toLocation: marker.position)
+            self.setInfoWindow(hidden: false)
+        } else if let stop = marker.userData as? Stop {
+            self.setInfoWindow(hidden: true)
+        } else {
+            return false
+        }
+
+
         return true
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        guard let change = change else {return }
-
-        let newMarker = change[NSKeyValueChangeKey.newKey] as? GMSMarker
-
-    }
-
     func setInfoWindow(hidden: Bool) {
-        if hidden {
+        guard let infoWindow = infoWindow else { return }
+        var animationsBlock: (()->())?
+
+        if hidden && (infoWindow.detailsHidden == false) {
+            animationsBlock = {
+                infoWindow.frame.origin.y = self.view.frame.maxY
+                infoWindow.detailsHidden = true
+            }
+        } else if hidden == false && (infoWindow.detailsHidden == true) {
+            animationsBlock = {
+                infoWindow.frame.origin.y = self.view.frame.maxY - infoWindow.frame.height + VehicleDetailsView.bottomMargin
+                infoWindow.detailsHidden = false
+            }
+        }
+        if let animations = animationsBlock {
             UIView.animate(withDuration: 0.5,
                            delay: 0,
                            usingSpringWithDamping: 0.8,
                            initialSpringVelocity: 10,
                            options: UIViewAnimationOptions.curveEaseOut,
-                           animations: {
-                            guard let infoWindow = self.infoWindow else { return }
-                            infoWindow.frame.origin.y = self.view.frame.maxY
-            }, completion: nil)
-        } else {
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: 0.8,
-                           initialSpringVelocity: 10,
-                           options: UIViewAnimationOptions.curveEaseOut,
-                           animations: {
-                            guard let infoWindow = self.infoWindow else { return }
-                            infoWindow.frame.origin.y = self.view.frame.maxY - infoWindow.frame.height
-            }, completion: nil)
+                           animations: animations,
+                           completion: nil)
         }
     }
 
@@ -111,31 +115,46 @@ class ViewController: UIViewController, GMSMapViewDelegate {
 //    }
 //
 
-    let animator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut)
+    let infoWindowAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut)
 
-    @objc func handlePanGesture(_ sender: Any?) {
-        guard let recognizer = sender as? UIPanGestureRecognizer else { return }
-
-        switch  recognizer.state {
-        case .began:
-            animator.addAnimations {
-                self.infoWindow?.frame.origin.y = self.view.frame.height
+    func animatorSetup() {
+        infoWindowAnimator.addAnimations {
+            self.infoWindow?.frame.origin.y = self.view.frame.height
+        }
+        infoWindowAnimator.addCompletion({ position in
+            if position == .end {
+                self.infoWindow?.detailsHidden = true
+            } else if position == .start {
+                self.infoWindow?.detailsHidden = false
             }
+        })
+    }
+}
+
+extension ViewController: LinePickerDelegate, DetailViewPanDelegate {
+    func handle(_ panGesture: UIPanGestureRecognizer) {
+        switch  panGesture.state {
         case .changed:
-            let fraction = recognizer.translation(in: self.view).y / (self.infoWindow?.frame.height ?? 1)
-            animator.fractionComplete = fraction
+            let fraction = panGesture.translation(in: self.view).y / (self.infoWindow?.frame.height ?? 1)
+            infoWindowAnimator.fractionComplete = fraction
         case .ended:
-            animator.isReversed = recognizer.velocity(in: self.view).y < 0
-            animator.startAnimation()
+            let velocity = panGesture.velocity(in: self.view).y
+            infoWindowAnimator.isReversed = velocity < 0
+            if abs(velocity) > 100 {
+                if infoWindowAnimator.state == .stopped {
+                    infoWindowAnimator.finishAnimation(at: .end)
+                } else {
+                    infoWindowAnimator.startAnimation()
+                }
+            } else {
+                infoWindowAnimator.stopAnimation(false)
+                infoWindowAnimator.finishAnimation(at: .start)
+            }
         default:
             break
         }
     }
 
-
-}
-
-extension ViewController: LinePickerDelegate {
     func pickerDidSelect(lines: [String]) {
 //        guard let manager = vehiclesManager else {
 //            return
@@ -149,6 +168,8 @@ extension ViewController: LinePickerDelegate {
 //        }
 //        mapView.addAnnotations(annotations)
     }
+
+
 }
 
 extension ViewController: StopsManagerDelegate {
