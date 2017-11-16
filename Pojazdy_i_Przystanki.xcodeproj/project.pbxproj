@@ -48,6 +48,7 @@
 		72947B381EF3D1320015819C /* SmallVehicleAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 72947B371EF3D1320015819C /* SmallVehicleAnnotationView.xib */; };
 		72947B3A1EF3D4BE0015819C /* SmallVehicleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72947B391EF3D4BE0015819C /* SmallVehicleAnnotationView.swift */; };
 		72947B3E1EF3F3480015819C /* PunctualityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72947B3D1EF3F3480015819C /* PunctualityLabel.swift */; };
+		72A525F51FBDDF6F00C7CD12 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A525F41FBDDF6F00C7CD12 /* Route.swift */; };
 		72B628D51EEECC07005CC957 /* StopsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B628D41EEECC07005CC957 /* StopsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,7 @@
 		72947B371EF3D1320015819C /* SmallVehicleAnnotationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SmallVehicleAnnotationView.xib; sourceTree = "<group>"; };
 		72947B391EF3D4BE0015819C /* SmallVehicleAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallVehicleAnnotationView.swift; sourceTree = "<group>"; };
 		72947B3D1EF3F3480015819C /* PunctualityLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunctualityLabel.swift; sourceTree = "<group>"; };
+		72A525F41FBDDF6F00C7CD12 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		72B628D41EEECC07005CC957 /* StopsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopsManager.swift; sourceTree = "<group>"; };
 		9C95CFC6F2A7F4E42B4C1574 /* Pods-Pojazdy_i_Przystanki.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pojazdy_i_Przystanki.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pojazdy_i_Przystanki/Pods-Pojazdy_i_Przystanki.release.xcconfig"; sourceTree = "<group>"; };
 		B9459AEACF4AC6F1F71A213A /* Pods-Pojazdy_i_Przystanki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pojazdy_i_Przystanki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pojazdy_i_Przystanki/Pods-Pojazdy_i_Przystanki.debug.xcconfig"; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				7204D96D1EEEB20900E59437 /* Vehicle.swift */,
 				7204D96F1EEEB24E00E59437 /* Stop.swift */,
 				7204D9711EEEB2FD00E59437 /* LineType.swift */,
+				72A525F41FBDDF6F00C7CD12 /* Route.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				727902311EEFDE8E00CAF195 /* VehicleAnnotation.swift in Sources */,
 				727524811EF0140E007C5EB3 /* Bundle+LoadFromNib.swift in Sources */,
 				7293B2931FB84FF30023AF7E /* GMUDefaultClusterRenderer.m in Sources */,
+				72A525F51FBDDF6F00C7CD12 /* Route.swift in Sources */,
 				7275247D1EF00657007C5EB3 /* Storyboards.swift in Sources */,
 				7293B2911FB84FF30023AF7E /* GMUSimpleClusterAlgorithm.m in Sources */,
 				7293B2901FB84FF30023AF7E /* GMUWrappingDictionaryKey.m in Sources */,

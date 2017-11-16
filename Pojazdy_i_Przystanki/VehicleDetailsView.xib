@@ -35,6 +35,9 @@
                                         <state key="normal" title="Button">
                                             <color key="titleColor" red="0.0" green="0.53192417510000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="routeButtonTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="Z48-Ze-G9w"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="e3Z-go-EdB">
                                         <rect key="frame" x="32" y="28" width="311" height="199"/>
@@ -169,6 +172,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="containerView" destination="EhI-GJ-nv1" id="a2k-od-cXK"/>
                 <outlet property="lineLabel" destination="NyJ-0L-a9M" id="eIs-ey-0gF"/>
                 <outlet property="nextStopLabel" destination="d7D-hi-I4d" id="JOd-5r-EYx"/>
                 <outlet property="previousStopLabel" destination="M73-Lr-1IE" id="pgJ-UM-hxv"/>

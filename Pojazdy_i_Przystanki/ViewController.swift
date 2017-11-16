@@ -35,7 +35,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         stopsManager?.start()
         vehiclesManager = VehiclesManager(withDelegate: self)
         vehiclesManager?.start()
-        setupInfoWindow()
+        setupinfoView()
         animatorSetup()
         centerOnSzczecin(animated: false)
     }
@@ -45,31 +45,32 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         self.mapView.camera = camera
     }
 
-    var infoWindow: VehicleDetailsView?
+    var infoView: VehicleDetailsView?
 
-    func setupInfoWindow() {
+    func setupinfoView() {
         DispatchQueue.main.async {
-            let newInfoWindow = Bundle.loadViewFromNib(withType: VehicleDetailsView.self)
-            let infoWindowHeight = newInfoWindow.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height + VehicleDetailsView.bottomMargin
+            let newinfoView = Bundle.loadViewFromNib(withType: VehicleDetailsView.self)
+            newinfoView.routeButtonDelegate = self
+            let infoViewHeight = newinfoView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height + VehicleDetailsView.bottomMargin
             let frame = self.view.frame
-            newInfoWindow.frame = CGRect(x: frame.minX,
-                                         y: frame.maxY,
+            newinfoView.frame = CGRect(x: frame.minX,
+                                         y: frame.maxY + 1,
                                          width: frame.width,
-                                         height: infoWindowHeight)
-            self.view.addSubview(newInfoWindow)
-            newInfoWindow.panDelegate = self
-            self.infoWindow = newInfoWindow
+                                         height: infoViewHeight)
+            self.view.addSubview(newinfoView)
+            newinfoView.panDelegate = self
+            self.infoView = newinfoView
 
         }
     }
 
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if let vehicle = marker.userData as? Vehicle {
-            infoWindow?.configure(with: vehicle)
+            infoView?.configure(with: vehicle)
             mapView.animate(toLocation: marker.position)
-            self.setInfoWindow(hidden: false)
+            self.setinfoView(visible: true)
         } else if let stop = marker.userData as? Stop {
-            self.setInfoWindow(hidden: true)
+            self.setinfoView(visible: false)
         } else {
             return false
         }
@@ -78,30 +79,20 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         return true
     }
 
-    func setInfoWindow(hidden: Bool) {
-        guard let infoWindow = infoWindow else { return }
-        var animationsBlock: (()->())?
+    func setinfoView(visible: Bool) {
+        guard let infoView = infoView else { return }
+        let showHideAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.8, animations: nil)
 
-        if hidden && (infoWindow.detailsHidden == false) {
-            animationsBlock = {
-                infoWindow.frame.origin.y = self.view.frame.maxY
-                infoWindow.detailsHidden = true
+        if visible && isInfoviewVisible == false {
+            showHideAnimator.addAnimations {
+                infoView.frame.origin.y = self.view.frame.maxY - infoView.containerView.frame.height
             }
-        } else if hidden == false && (infoWindow.detailsHidden == true) {
-            animationsBlock = {
-                infoWindow.frame.origin.y = self.view.frame.maxY - infoWindow.frame.height + VehicleDetailsView.bottomMargin
-                infoWindow.detailsHidden = false
+        } else if visible == false && isInfoviewVisible == true {
+            showHideAnimator.addAnimations {
+                infoView.frame.origin.y = self.view.frame.maxY + 1
             }
         }
-        if let animations = animationsBlock {
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: 0.8,
-                           initialSpringVelocity: 10,
-                           options: UIViewAnimationOptions.curveEaseOut,
-                           animations: animations,
-                           completion: nil)
-        }
+        showHideAnimator.startAnimation()
     }
 
 //    @IBAction func filterButtonTapped(_ sender: Any) {
@@ -115,45 +106,54 @@ class ViewController: UIViewController, GMSMapViewDelegate {
 //    }
 //
 
-    let infoWindowAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .easeOut)
+    var infoViewAnimator: UIViewPropertyAnimator?
+    var isInfoviewVisible: Bool {
+        guard let infoView = infoView else { return false }
+        return self.view.frame.intersects(infoView.frame)
+    }
 
     func animatorSetup() {
-        infoWindowAnimator.addAnimations {
-            self.infoWindow?.frame.origin.y = self.view.frame.height
-        }
-        infoWindowAnimator.addCompletion({ position in
-            if position == .end {
-                self.infoWindow?.detailsHidden = true
-            } else if position == .start {
-                self.infoWindow?.detailsHidden = false
-            }
-        })
+//        infoViewAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.8, animations: {
+//            self.infoView?.frame.origin.y = self.view.frame.maxY + 1
+//        })
     }
 }
 
-extension ViewController: LinePickerDelegate, DetailViewPanDelegate {
+extension ViewController: LinePickerDelegate, DetailViewPanDelegate, DetailViewRouteDelegate {
     func handle(_ panGesture: UIPanGestureRecognizer) {
+        guard let infoView = self.infoView else { return }
+
         switch  panGesture.state {
-        case .changed:
-            let fraction = panGesture.translation(in: self.view).y / (self.infoWindow?.frame.height ?? 1)
-            infoWindowAnimator.fractionComplete = fraction
-        case .ended:
-            let velocity = panGesture.velocity(in: self.view).y
-            infoWindowAnimator.isReversed = velocity < 0
-            if abs(velocity) > 100 {
-                if infoWindowAnimator.state == .stopped {
-                    infoWindowAnimator.finishAnimation(at: .end)
-                } else {
-                    infoWindowAnimator.startAnimation()
-                }
-            } else {
-                infoWindowAnimator.stopAnimation(false)
-                infoWindowAnimator.finishAnimation(at: .start)
+        case .began:
+            if infoViewAnimator?.isRunning ?? false {
+                infoViewAnimator?.stopAnimation(false)
             }
+            infoViewAnimator?.startAnimation()
+        case .changed:
+            let translation = panGesture.translation(in: self.view).y
+//            guard newOrigin.maxX >= view.frame.maxX else { return }
+            infoView.frame.origin.y += translation
+
+        case .ended:
+            let velocity = CGVector(dx: 0, dy: panGesture.velocity(in: self.view).y / 200)
+            let springParameters = UISpringTimingParameters(mass: 0.1, stiffness: 100, damping: 200, initialVelocity: velocity)
+            infoViewAnimator = UIViewPropertyAnimator(duration: 0.0, timingParameters: springParameters)
+            let startingPoint = infoView.frame.maxX
+
+            infoViewAnimator?.addAnimations({
+                self.infoView?.frame.origin.y = self.view.frame.maxY + 1
+            })
+
+            infoViewAnimator?.startAnimation()
         default:
             break
         }
     }
+
+    func didTapRouteButtonFor(vehicle: Vehicle) {
+        <#code#>
+    }
+
 
     func pickerDidSelect(lines: [String]) {
 //        guard let manager = vehiclesManager else {

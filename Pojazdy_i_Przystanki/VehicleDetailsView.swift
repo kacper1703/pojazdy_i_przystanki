@@ -12,6 +12,10 @@ protocol DetailViewPanDelegate: class {
     func handle(_ panGesture: UIPanGestureRecognizer)
 }
 
+protocol DetailViewRouteDelegate: class {
+    func didTapRouteButtonFor(vehicle: Vehicle)
+}
+
 class VehicleDetailsView: UIView {
     @IBOutlet private var lineLabel: UILabel!
     @IBOutlet private var punctualityLabel: UILabel!
@@ -21,13 +25,21 @@ class VehicleDetailsView: UIView {
     @IBOutlet private var showRouteButton: UIButton!
     @IBOutlet private var visualEffectView: UIVisualEffectView! {
         didSet {
+            visualEffectView.layer.masksToBounds = true
             visualEffectView.layer.cornerRadius = 10.0
         }
     }
+    @IBOutlet private (set) var containerView: UIView!
+
+    @IBAction func routeButtonTapped() {
+
+    }
 
     static let bottomMargin: CGFloat = 20.0
+    var vehicle: Vehicle?
 
     func configure(with vehicle: Vehicle) {
+        self.vehicle = vehicle
         lineLabel.text = vehicle.line
         punctualityLabel.text = vehicle.punctuality.description
         previousStopLabel.text = vehicle.previousStop
@@ -35,9 +47,8 @@ class VehicleDetailsView: UIView {
         routeLabel.text = String(describing: vehicle.route)
     }
 
-    var detailsHidden: Bool = true
-
     weak var panDelegate: DetailViewPanDelegate?
+    weak var routeButtonDelegate: DetailViewRouteDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
