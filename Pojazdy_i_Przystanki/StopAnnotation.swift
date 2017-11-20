@@ -23,8 +23,6 @@ class StopAnnotation: NSObject, AnnotationWithImage {
         self.coordinate = CLLocationCoordinate2D(latitude: stop.latitude, longitude: stop.longitude)
         self.title = stop.name
         self.image = Asset.stop.image
-        if let setNumber = stop.setNumber, let pole = stop.poleNumber {
-            self.subtitle = "\(setNumber)\(pole)"
-        }
+            self.subtitle = "\(stop.setNumber)\(stop.poleNumber)"
     }
 }

@@ -23,6 +23,10 @@ class VehicleDetailsView: UIView {
     @IBOutlet private var nextStopLabel: UILabel!
     @IBOutlet private var routeLabel: UILabel!
     @IBOutlet private var showRouteButton: UIButton!
+    @IBOutlet private var handleImageView: UIImageView! {
+        didSet { handleImageView.backgroundColor = .lightGray }
+    }
+
     @IBOutlet private var visualEffectView: UIVisualEffectView! {
         didSet {
             visualEffectView.layer.masksToBounds = true
@@ -35,7 +39,17 @@ class VehicleDetailsView: UIView {
 
     }
 
-    static let bottomMargin: CGFloat = 20.0
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        loadFromNib()
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+         loadFromNib()
+    }
+
+    let bottomMargin: CGFloat = 20.0
     var vehicle: Vehicle?
 
     func configure(with vehicle: Vehicle) {
@@ -52,8 +66,15 @@ class VehicleDetailsView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = .clear
         let panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        panRecognizer.maximumNumberOfTouches = 1
         self.addGestureRecognizer(panRecognizer)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        handleImageView.layer.cornerRadius = handleImageView.bounds.height / 2
     }
 
     @objc func handlePan(_ sender: UIPanGestureRecognizer) {

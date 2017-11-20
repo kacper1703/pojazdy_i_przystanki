@@ -49,6 +49,7 @@
 		72947B3A1EF3D4BE0015819C /* SmallVehicleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72947B391EF3D4BE0015819C /* SmallVehicleAnnotationView.swift */; };
 		72947B3E1EF3F3480015819C /* PunctualityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72947B3D1EF3F3480015819C /* PunctualityLabel.swift */; };
 		72A525F51FBDDF6F00C7CD12 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A525F41FBDDF6F00C7CD12 /* Route.swift */; };
+		72AFE5F31FC18C07004B8006 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AFE5F21FC18C07004B8006 /* DetailViewController.swift */; };
 		72B628D51EEECC07005CC957 /* StopsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B628D41EEECC07005CC957 /* StopsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +120,7 @@
 		72947B391EF3D4BE0015819C /* SmallVehicleAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallVehicleAnnotationView.swift; sourceTree = "<group>"; };
 		72947B3D1EF3F3480015819C /* PunctualityLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunctualityLabel.swift; sourceTree = "<group>"; };
 		72A525F41FBDDF6F00C7CD12 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		72AFE5F21FC18C07004B8006 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		72B628D41EEECC07005CC957 /* StopsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopsManager.swift; sourceTree = "<group>"; };
 		9C95CFC6F2A7F4E42B4C1574 /* Pods-Pojazdy_i_Przystanki.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pojazdy_i_Przystanki.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pojazdy_i_Przystanki/Pods-Pojazdy_i_Przystanki.release.xcconfig"; sourceTree = "<group>"; };
 		B9459AEACF4AC6F1F71A213A /* Pods-Pojazdy_i_Przystanki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pojazdy_i_Przystanki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pojazdy_i_Przystanki/Pods-Pojazdy_i_Przystanki.debug.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				72848DA31FB99311004A9CA2 /* Model */,
 				72844AA01EEEB14800D3DEC9 /* AppDelegate.swift */,
 				72844AA21EEEB14800D3DEC9 /* ViewController.swift */,
+				72AFE5F21FC18C07004B8006 /* DetailViewController.swift */,
 				722F73901EF40CD900833065 /* LinePickerViewController.swift */,
 				72844AA41EEEB14800D3DEC9 /* Main.storyboard */,
 				72844AA91EEEB14800D3DEC9 /* LaunchScreen.storyboard */,
@@ -407,12 +410,14 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Pojazdy_i_Przystanki/Pods-Pojazdy_i_Przystanki-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/DrawerKit/DrawerKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DrawerKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7204D96E1EEEB20900E59437 /* Vehicle.swift in Sources */,
+				72AFE5F31FC18C07004B8006 /* DetailViewController.swift in Sources */,
 				727524831EF11EE2007C5EB3 /* Iterable.swift in Sources */,
 				7275247C1EF00657007C5EB3 /* Images.swift in Sources */,
 				72947B3E1EF3F3480015819C /* PunctualityLabel.swift in Sources */,

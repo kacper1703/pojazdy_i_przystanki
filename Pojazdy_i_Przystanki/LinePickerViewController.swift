@@ -25,7 +25,7 @@ class LinePickerViewController: UIViewController, UITableViewDelegate, UITableVi
             tableView?.reloadData()
         }
     }
-    var linesDataSource: [(selected: Bool, line: String)] = []
+    fileprivate var linesDataSource: [(selected: Bool, line: String)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()

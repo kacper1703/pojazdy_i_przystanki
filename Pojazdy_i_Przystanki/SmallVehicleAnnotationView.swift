@@ -29,7 +29,7 @@ class SmallVehicleAnnotationView: UIView {
 
     var lineType: LineType? {
         didSet {
-            self.layer.borderColor = self.vehicle?.borderColor
+//            self.layer.borderColor = self.vehicle?.borderColor
         }
     }
     var line: String? {

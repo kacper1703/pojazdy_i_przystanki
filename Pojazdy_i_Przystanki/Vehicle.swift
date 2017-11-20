@@ -58,8 +58,8 @@ class Vehicle: NSObject, Mappable, GMUClusterItem {
             self.line = line
             self.lineType = lineType
             self.route = routeInt
-            self.nextStop = nextStop
-            self.previousStop = previousStop
+            self.nextStop = nextStop.isEmpty ? "n/a" : nextStop
+            self.previousStop = previousStop.isEmpty ? "n/a" : previousStop
             self.coordinate = (latDouble, lonDouble)
             self.punctuality = (punctuality1, 0)
             self.gmvid = gmvid
@@ -96,13 +96,13 @@ class Vehicle: NSObject, Mappable, GMUClusterItem {
         }
     }
 
-    var borderColor: CGColor {
+    var lineColor: UIColor {
         switch self.lineType {
-        case .busExpedited: return UIColor(red:0.9882, green:0.0510, blue:0.1059, alpha:1.0000).cgColor
-        case .busNight: return UIColor.white.cgColor
-        case .busNormal: return UIColor(red:0.5137, green:0.7294, blue:0.1373, alpha:1.0000).cgColor
-        case .tramNormal: return UIColor(red:0.0980, green:0.6157, blue:0.8549, alpha:1.0000).cgColor
-        case .temporary: return UIColor(red:0.9922, green:0.7686, blue:0.2314, alpha:1.0000).cgColor
+        case .busExpedited: return UIColor(red:0.9882, green:0.0510, blue:0.1059, alpha:1.0000)
+        case .busNight: return UIColor.white
+        case .busNormal: return UIColor(red:0.5137, green:0.7294, blue:0.1373, alpha:1.0000)
+        case .tramNormal: return UIColor(red:0.0980, green:0.6157, blue:0.8549, alpha:1.0000)
+        case .temporary: return UIColor(red:0.9922, green:0.7686, blue:0.2314, alpha:1.0000)
         }
     }
 }

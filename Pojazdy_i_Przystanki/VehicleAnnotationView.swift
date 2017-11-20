@@ -31,7 +31,7 @@ class VehicleAnnotationView: UIView {
         self.fromLabel.text = "Z: \(vehicle.previousStop)"
         self.toLabel.text = "Do: \(vehicle.nextStop)"
         self.punctualityLabel.punctuality = vehicle.punctuality.amount
-        layer.borderColor = vehicle.borderColor
+//        layer.borderColor = vehicle.borderColor
     }
 
     override func awakeFromNib() {

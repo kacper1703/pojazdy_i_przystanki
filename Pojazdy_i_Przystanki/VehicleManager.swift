@@ -51,12 +51,14 @@ class VehiclesManager {
     }
 
     func start() {
-        self.timer = Timer.scheduledTimer(timeInterval: 20,
-                                          target: self,
-                                          selector: #selector(download),
-                                          userInfo: nil,
-                                          repeats: true)
-        download()
+        if self.timer == nil {
+            self.timer = Timer.scheduledTimer(timeInterval: 20,
+                                              target: self,
+                                              selector: #selector(download),
+                                              userInfo: nil,
+                                              repeats: true)
+            download()
+        }
     }
 
     func allLines() -> [String] {
@@ -67,6 +69,11 @@ class VehiclesManager {
             }
         }
         return lines
+    }
+
+    func pause() {
+        self.timer?.invalidate()
+        self.timer = nil
     }
 
     var markers: [GMSMarker] {

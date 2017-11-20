@@ -16,18 +16,26 @@ class Stop: NSObject, Mappable, GMUClusterItem {
     private (set) var name: String?
     private (set) var latitude: Double
     private (set) var longitude: Double
-    private (set) var setNumber: Int?
-    private (set) var poleNumber: String?
+    private (set) var setNumber: String
+    private (set) var poleNumber: String
 
     required init?(map: Map) {
         guard let id = map.JSON["id"] as? Int,
             let lat = map.JSON["szerokoscgeo"] as? Double,
-            let lon = map.JSON["dlugoscgeo"] as? Double else {
+            let lon = map.JSON["dlugoscgeo"] as? Double,
+            let setNumber = map.JSON["nrzespolu"] as? Int,
+            let poleNumber = map.JSON["nrslupka"] as? String else {
             return nil
         }
         self.id = id
         self.latitude = lat
         self.longitude = lon
+        self.poleNumber = poleNumber
+        self.setNumber = String(setNumber)
+    }
+
+    var stopNumber: String {
+        return "\(setNumber)\(poleNumber)"
     }
 
     func mapping(map: Map) {

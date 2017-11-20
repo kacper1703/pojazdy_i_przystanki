@@ -14,6 +14,7 @@ import GoogleMaps
 protocol StopsManagerDelegate: class {
     func manager(manager: StopsManager, didSet stops: [Stop])
     func manager(manager: StopsManager, didFailWith error: Error)
+    func manager(manager: StopsManager, didDownloadDepartures: StopDepartures)
 }
 
 class StopsManager {
@@ -30,6 +31,10 @@ class StopsManager {
     }
 
     func start() {
+        guard stops.isEmpty else {
+            resume()
+            return
+        }
         let url = "http://www.zditm.szczecin.pl/json/slupki.inc.php"
         Alamofire.request(url).responseArray { (response: DataResponse<[Stop]>) in
             if let error = response.error {
@@ -42,6 +47,10 @@ class StopsManager {
         }
     }
 
+    func resume() {
+        delegate?.manager(manager: self, didSet: stops)
+    }
+
     var markers: [GMSMarker] {
         return self.stops.map({ (stop) -> GMSMarker in
             let marker = GMSMarker()
@@ -52,5 +61,20 @@ class StopsManager {
             marker.icon = Asset.stop.image
             return marker
         })
+    }
+
+    func stopDepartures(for stopId: String) {
+        let url = "http://www.zditm.szczecin.pl/json/tablica.inc.php?slupek=\(stopId)"
+        Alamofire.request(url).responseData() { (response: DataResponse<Data>) in
+            if let data = response.data, let utf8Text = String(data: data, encoding: String.Encoding.utf8) {
+                let departures = StopDepartures.init(with: utf8Text)
+                self.delegate?.manager(manager: self, didDownloadDepartures: departures)
+            }
+
+            if let error = response.error {
+                self.delegate?.manager(manager: self, didFailWith: error)
+                return
+            }
+        }
     }
 }
