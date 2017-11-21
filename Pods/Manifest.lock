@@ -9,6 +9,7 @@ PODS:
   - GoogleMaps/Base (2.5.0)
   - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
+  - HDAugmentedReality (2.3.0)
   - ObjectMapper (3.1.0)
   - SwiftGen (5.2.1)
   - SwiftLint (0.24.0)
@@ -18,6 +19,7 @@ DEPENDENCIES:
   - AlamofireObjectMapper (= 5.0.0)
   - DrawerKit (= 0.3.4)
   - GoogleMaps (= 2.5.0)
+  - HDAugmentedReality (= 2.3)
   - SwiftGen (= 5.2.1)
   - SwiftLint (= 0.24.0)
 
@@ -26,10 +28,11 @@ SPEC CHECKSUMS:
   AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
   DrawerKit: 995095157b30ecbd41165c620c0f9e4166867962
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
+  HDAugmentedReality: 2ea96cb488aa81298e6557a897b4252d62e55843
   ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
   SwiftGen: 444b4c467e512a4812b8a800d731643fd265139e
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
 
-PODFILE CHECKSUM: 31b5d42140d7cc2915fcd0b528d044d5c7886617
+PODFILE CHECKSUM: 363f398b992632d241e205a82e72f2f4499c7f0d
 
 COCOAPODS: 1.3.1

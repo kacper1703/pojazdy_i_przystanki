@@ -143,7 +143,7 @@ extension ViewController: LinePickerDelegate {
 
 extension ViewController: StopsManagerDelegate {
     func manager(manager: StopsManager, didDownloadDepartures: StopDepartures) {
-        <#code#>
+
     }
 
     func manager(manager: StopsManager, didSet stops: [Stop]) {
@@ -237,7 +237,7 @@ extension ViewController: GMUClusterRendererDelegate, DrawerAnimationParticipant
     var drawerAnimationActions: DrawerAnimationActions {
         return DrawerAnimationActions(prepare: nil, animateAlong: nil, cleanup: { info in
             if info.endDrawerState == .collapsed {
-                selectedMarker = nil
+                self.selectedMarker = nil
             }
         })
     }
