@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Map-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Pojazdy_i_Przystanki" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JJJ-ud-ge5" customClass="GMSMapView" propertyAccessControl="all">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JJJ-ud-ge5" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -76,7 +76,7 @@
                             <constraint firstItem="A0K-ty-qbc" firstAttribute="top" secondItem="1fW-UU-5v6" secondAttribute="bottom" constant="10" id="zep-Dx-b8w"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="8Sv-xY-NKc"/>
+                    <tabBarItem key="tabBarItem" title="Map" id="8Sv-xY-NKc"/>
                     <connections>
                         <outlet property="mapView" destination="JJJ-ud-ge5" id="90E-Xa-q7s"/>
                         <outlet property="stopsSwitch" destination="1fW-UU-5v6" id="T7A-IM-yyz"/>
@@ -85,7 +85,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="476" y="92.203898050974516"/>
+            <point key="canvasLocation" x="476" y="-92"/>
+        </scene>
+        <!--AR-->
+        <scene sceneID="rE2-w4-uPk">
+            <objects>
+                <viewController id="YF3-Ss-ojR" customClass="CameraViewController" customModule="Pojazdy_i_Przystanki" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VED-Y7-GMI"/>
+                        <viewControllerLayoutGuide type="bottom" id="aUG-fU-5u8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aLd-FH-4tP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="AR" id="ZZp-7I-wgq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LO7-De-ZKZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="476" y="681"/>
         </scene>
         <!--Line Picker View Controller-->
         <scene sceneID="TvV-yD-Dum">
@@ -338,11 +357,13 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="J0w-Ot-DJg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n2O-WF-WWf">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="6IQ-5Q-qyo"/>
+                        <segue destination="YF3-Ss-ojR" kind="relationship" relationship="viewControllers" id="nvm-s6-jW6"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="2Xj-Ch-jtd"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tMK-ox-10i" userLabel="First Responder" sceneMemberID="firstResponder"/>

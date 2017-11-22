@@ -30,6 +30,11 @@ class StopsManager {
         }
     }
 
+    func stopWith(id: String?) -> Stop? {
+        guard let id = Int(id ?? "") else { return nil }
+        return self.stops.filter({ $0.id == id }).first
+    }
+
     func start() {
         guard stops.isEmpty else {
             resume()

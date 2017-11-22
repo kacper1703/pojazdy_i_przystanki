@@ -50,6 +50,12 @@ class Stop: NSObject, Mappable, GMUClusterItem {
     var position: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
     }
+
+    var positionNon2D: CLLocation {
+        return CLLocation(latitude: self.latitude, longitude: self.longitude)
+    }
+
+
 }
 
 //http://www.zditm.szczecin.pl/json/tablica.inc.php?slupek=34111

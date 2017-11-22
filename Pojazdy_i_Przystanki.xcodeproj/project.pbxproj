@@ -12,6 +12,7 @@
 		7204D9701EEEB24E00E59437 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7204D96F1EEEB24E00E59437 /* Stop.swift */; };
 		7204D9721EEEB2FD00E59437 /* LineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7204D9711EEEB2FD00E59437 /* LineType.swift */; };
 		7204D9741EEEB75B00E59437 /* VehicleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7204D9731EEEB75B00E59437 /* VehicleManager.swift */; };
+		72180B541FC4A3E400DECAA7 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72180B531FC4A3E400DECAA7 /* ARViewController.swift */; };
 		722F738F1EF407EB00833065 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 722F738E1EF407EB00833065 /* Assets.xcassets */; };
 		722F73911EF40CD900833065 /* LinePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722F73901EF40CD900833065 /* LinePickerViewController.swift */; };
 		7257D9EC1EF7C717005D09D8 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7257D9EB1EF7C717005D09D8 /* .swiftlint.yml */; };
@@ -58,6 +59,7 @@
 		7204D96F1EEEB24E00E59437 /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		7204D9711EEEB2FD00E59437 /* LineType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineType.swift; sourceTree = "<group>"; };
 		7204D9731EEEB75B00E59437 /* VehicleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleManager.swift; sourceTree = "<group>"; };
+		72180B531FC4A3E400DECAA7 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		722F738E1EF407EB00833065 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		722F73901EF40CD900833065 /* LinePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePickerViewController.swift; sourceTree = "<group>"; };
 		7257D9EB1EF7C717005D09D8 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
@@ -195,6 +197,7 @@
 				72848DA31FB99311004A9CA2 /* Model */,
 				72844AA01EEEB14800D3DEC9 /* AppDelegate.swift */,
 				72844AA21EEEB14800D3DEC9 /* ViewController.swift */,
+				72180B531FC4A3E400DECAA7 /* ARViewController.swift */,
 				72AFE5F21FC18C07004B8006 /* DetailViewController.swift */,
 				722F73901EF40CD900833065 /* LinePickerViewController.swift */,
 				72844AA41EEEB14800D3DEC9 /* Main.storyboard */,
@@ -512,6 +515,7 @@
 				7293B2941FB84FF30023AF7E /* GMUDefaultClusterIconGenerator.m in Sources */,
 				7204D9741EEEB75B00E59437 /* VehicleManager.swift in Sources */,
 				727524721EEFFCDA007C5EB3 /* StopAnnotation.swift in Sources */,
+				72180B541FC4A3E400DECAA7 /* ARViewController.swift in Sources */,
 				7275247E1EF00657007C5EB3 /* Strings.swift in Sources */,
 				722F73911EF40CD900833065 /* LinePickerViewController.swift in Sources */,
 				7293B2921FB84FF30023AF7E /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,

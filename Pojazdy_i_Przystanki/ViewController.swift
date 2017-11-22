@@ -47,7 +47,6 @@ class ViewController: UIViewController, GMSMapViewDelegate, DrawerCoordinating {
 
     var stopsManager: StopsManager?
     var vehiclesManager: VehiclesManager?
-    var currentLocation: CLLocation?
     private var stopsClusterManager: GMUClusterManager!
     private var vehicleClusterManager: GMUClusterManager!
     private var selectedMarker: GMSMarker? { didSet {
@@ -60,6 +59,16 @@ class ViewController: UIViewController, GMSMapViewDelegate, DrawerCoordinating {
         stopsManager = StopsManager(withDelegate: self)
         vehiclesManager = VehiclesManager(withDelegate: self)
         centerOnSzczecin(animated: false)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        vehiclesManager?.start()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        vehiclesManager?.pause()
     }
 
     func centerOnSzczecin(animated: Bool) {
