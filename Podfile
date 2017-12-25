@@ -8,6 +8,7 @@ target 'Pojazdy_i_Przystanki' do
     pod 'GoogleMaps', '2.5.0'
     pod 'HDAugmentedReality', '2.3'
     pod 'DrawerKit', '0.3.4'
+    pod 'SwiftyJSON', '4.0'
     pod 'SwiftGen', '5.2.1'
     pod 'SwiftLint', '0.24.0'
 end
