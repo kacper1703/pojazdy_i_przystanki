@@ -15,6 +15,11 @@
 		72180B541FC4A3E400DECAA7 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72180B531FC4A3E400DECAA7 /* ARViewController.swift */; };
 		722F738F1EF407EB00833065 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 722F738E1EF407EB00833065 /* Assets.xcassets */; };
 		722F73911EF40CD900833065 /* LinePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722F73901EF40CD900833065 /* LinePickerViewController.swift */; };
+		72532F941FF174A1009C5E58 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72532F931FF174A1009C5E58 /* GeoJSON.swift */; };
+		72532F971FF17AE9009C5E58 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72532F961FF17AE9009C5E58 /* Feature.swift */; };
+		72532F991FF17AFA009C5E58 /* FeatureCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72532F981FF17AFA009C5E58 /* FeatureCollection.swift */; };
+		72532F9B1FF182E8009C5E58 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72532F9A1FF182E8009C5E58 /* Point.swift */; };
+		72532F9D1FF18311009C5E58 /* LineString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72532F9C1FF18311009C5E58 /* LineString.swift */; };
 		7257D9EC1EF7C717005D09D8 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7257D9EB1EF7C717005D09D8 /* .swiftlint.yml */; };
 		727524721EEFFCDA007C5EB3 /* StopAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727524711EEFFCDA007C5EB3 /* StopAnnotation.swift */; };
 		7275247B1EF00657007C5EB3 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727524771EF00657007C5EB3 /* Fonts.swift */; };
@@ -51,7 +56,10 @@
 		72947B3E1EF3F3480015819C /* PunctualityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72947B3D1EF3F3480015819C /* PunctualityLabel.swift */; };
 		72A525F51FBDDF6F00C7CD12 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A525F41FBDDF6F00C7CD12 /* Route.swift */; };
 		72AFE5F31FC18C07004B8006 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AFE5F21FC18C07004B8006 /* DetailViewController.swift */; };
+		72B3A1A31FF3B1BA00D331E5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B3A1A21FF3B1BA00D331E5 /* String+Extensions.swift */; };
+		72B3A1A71FF3B31400D331E5 /* RoutesCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B3A1A61FF3B31400D331E5 /* RoutesCollection.swift */; };
 		72B628D51EEECC07005CC957 /* StopsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B628D41EEECC07005CC957 /* StopsManager.swift */; };
+		72D9FA0D1FF3B4AD0057D6AC /* StopDepartures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D9FA0C1FF3B4AD0057D6AC /* StopDepartures.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +70,11 @@
 		72180B531FC4A3E400DECAA7 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		722F738E1EF407EB00833065 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		722F73901EF40CD900833065 /* LinePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePickerViewController.swift; sourceTree = "<group>"; };
+		72532F931FF174A1009C5E58 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
+		72532F961FF17AE9009C5E58 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		72532F981FF17AFA009C5E58 /* FeatureCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCollection.swift; sourceTree = "<group>"; };
+		72532F9A1FF182E8009C5E58 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		72532F9C1FF18311009C5E58 /* LineString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineString.swift; sourceTree = "<group>"; };
 		7257D9EB1EF7C717005D09D8 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		727524711EEFFCDA007C5EB3 /* StopAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopAnnotation.swift; sourceTree = "<group>"; };
 		727524771EF00657007C5EB3 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Pojazdy_i_Przystanki/SwiftGen/Fonts.swift; sourceTree = "<group>"; };
@@ -123,7 +136,10 @@
 		72947B3D1EF3F3480015819C /* PunctualityLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PunctualityLabel.swift; sourceTree = "<group>"; };
 		72A525F41FBDDF6F00C7CD12 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		72AFE5F21FC18C07004B8006 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		72B3A1A21FF3B1BA00D331E5 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		72B3A1A61FF3B31400D331E5 /* RoutesCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesCollection.swift; sourceTree = "<group>"; };
 		72B628D41EEECC07005CC957 /* StopsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopsManager.swift; sourceTree = "<group>"; };
+		72D9FA0C1FF3B4AD0057D6AC /* StopDepartures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopDepartures.swift; sourceTree = "<group>"; };
 		9C95CFC6F2A7F4E42B4C1574 /* Pods-Pojazdy_i_Przystanki.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pojazdy_i_Przystanki.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pojazdy_i_Przystanki/Pods-Pojazdy_i_Przystanki.release.xcconfig"; sourceTree = "<group>"; };
 		B9459AEACF4AC6F1F71A213A /* Pods-Pojazdy_i_Przystanki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pojazdy_i_Przystanki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pojazdy_i_Przystanki/Pods-Pojazdy_i_Przystanki.debug.xcconfig"; sourceTree = "<group>"; };
 		C8F9362AA63DF59532B4990D /* Pods_Pojazdy_i_Przystanki.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pojazdy_i_Przystanki.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +165,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		72532F951FF17AD7009C5E58 /* GeoJson */ = {
+			isa = PBXGroup;
+			children = (
+				72532F931FF174A1009C5E58 /* GeoJSON.swift */,
+				72532F961FF17AE9009C5E58 /* Feature.swift */,
+				72532F981FF17AFA009C5E58 /* FeatureCollection.swift */,
+				72532F9A1FF182E8009C5E58 /* Point.swift */,
+				72532F9C1FF18311009C5E58 /* LineString.swift */,
+			);
+			name = GeoJson;
+			sourceTree = "<group>";
+		};
 		727524761EF00647007C5EB3 /* SwiftGen */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +193,7 @@
 			children = (
 				727524801EF0140E007C5EB3 /* Bundle+LoadFromNib.swift */,
 				727524821EF11EE2007C5EB3 /* Iterable.swift */,
+				72B3A1A21FF3B1BA00D331E5 /* String+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -235,10 +264,13 @@
 		72848DA31FB99311004A9CA2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				72532F951FF17AD7009C5E58 /* GeoJson */,
 				7204D96D1EEEB20900E59437 /* Vehicle.swift */,
 				7204D96F1EEEB24E00E59437 /* Stop.swift */,
 				7204D9711EEEB2FD00E59437 /* LineType.swift */,
 				72A525F41FBDDF6F00C7CD12 /* Route.swift */,
+				72B3A1A61FF3B31400D331E5 /* RoutesCollection.swift */,
+				72D9FA0C1FF3B4AD0057D6AC /* StopDepartures.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -508,6 +540,7 @@
 				727524831EF11EE2007C5EB3 /* Iterable.swift in Sources */,
 				7275247C1EF00657007C5EB3 /* Images.swift in Sources */,
 				72947B3E1EF3F3480015819C /* PunctualityLabel.swift in Sources */,
+				72532F9B1FF182E8009C5E58 /* Point.swift in Sources */,
 				7293B2A71FB8A2EF0023AF7E /* ClusterGenerator.swift in Sources */,
 				7293B2A11FB84FF30023AF7E /* GQTPointQuadTree.m in Sources */,
 				7293B28E1FB84FF30023AF7E /* GMUClusterManager.m in Sources */,
@@ -516,11 +549,13 @@
 				72947B351EF3CF1F0015819C /* LayerPickerViewController.swift in Sources */,
 				7293B2941FB84FF30023AF7E /* GMUDefaultClusterIconGenerator.m in Sources */,
 				7204D9741EEEB75B00E59437 /* VehicleManager.swift in Sources */,
+				72B3A1A31FF3B1BA00D331E5 /* String+Extensions.swift in Sources */,
 				727524721EEFFCDA007C5EB3 /* StopAnnotation.swift in Sources */,
 				72180B541FC4A3E400DECAA7 /* ARViewController.swift in Sources */,
 				7275247E1EF00657007C5EB3 /* Strings.swift in Sources */,
 				722F73911EF40CD900833065 /* LinePickerViewController.swift in Sources */,
 				7293B2921FB84FF30023AF7E /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
+				72532F971FF17AE9009C5E58 /* Feature.swift in Sources */,
 				7293B28F1FB84FF30023AF7E /* GMUGridBasedClusterAlgorithm.m in Sources */,
 				7204D9721EEEB2FD00E59437 /* LineType.swift in Sources */,
 				72844AA11EEEB14800D3DEC9 /* AppDelegate.swift in Sources */,
@@ -530,13 +565,18 @@
 				727524811EF0140E007C5EB3 /* Bundle+LoadFromNib.swift in Sources */,
 				7293B2931FB84FF30023AF7E /* GMUDefaultClusterRenderer.m in Sources */,
 				72A525F51FBDDF6F00C7CD12 /* Route.swift in Sources */,
+				72532F991FF17AFA009C5E58 /* FeatureCollection.swift in Sources */,
 				7275247D1EF00657007C5EB3 /* Storyboards.swift in Sources */,
 				7293B2911FB84FF30023AF7E /* GMUSimpleClusterAlgorithm.m in Sources */,
+				72532F941FF174A1009C5E58 /* GeoJSON.swift in Sources */,
 				7293B2901FB84FF30023AF7E /* GMUWrappingDictionaryKey.m in Sources */,
 				7275247B1EF00657007C5EB3 /* Fonts.swift in Sources */,
 				7293B2A21FB84FF30023AF7E /* GQTPointQuadTreeChild.m in Sources */,
 				7279022D1EEFCE4400CAF195 /* VehicleAnnotationView.swift in Sources */,
+				72B3A1A71FF3B31400D331E5 /* RoutesCollection.swift in Sources */,
+				72532F9D1FF18311009C5E58 /* LineString.swift in Sources */,
 				72947B3A1EF3D4BE0015819C /* SmallVehicleAnnotationView.swift in Sources */,
+				72D9FA0D1FF3B4AD0057D6AC /* StopDepartures.swift in Sources */,
 				7204D9701EEEB24E00E59437 /* Stop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

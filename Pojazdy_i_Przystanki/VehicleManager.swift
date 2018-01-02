@@ -9,15 +9,16 @@
 import Foundation
 import Alamofire
 import AlamofireObjectMapper
+import SwiftyJSON
 import MapKit
 
 protocol VehiclesManagerDelegate: class {
     func manager(manager: VehiclesManager, didSet vehicles: [Vehicle])
     func manager(manager: VehiclesManager, didFailWith error: Error)
+    func manager(manager: VehiclesManager, didDownload routesCollection: RoutesCollection)
 }
 
 class VehiclesManager {
-
     weak var delegate: VehiclesManagerDelegate?
     var timer: Timer?
 
@@ -90,13 +91,28 @@ class VehiclesManager {
 
     @objc private func download() {
         let url = "http://www.zditm.szczecin.pl/json/pojazdy.inc.php"
-        Alamofire.request(url).responseArray { (response: DataResponse<[Vehicle]>) in
+        Alamofire.request(url).validate().responseArray { (response: DataResponse<[Vehicle]>) in
             if let error = response.error {
                 self.delegate?.manager(manager: self, didFailWith: error)
                 return
             }
             if let vehiclesArray = response.result.value {
                 self.vehicles = vehiclesArray
+            }
+        }
+    }
+
+    func getRouteFor(gmvid: String) {
+        let url = "http://www.zditm.szczecin.pl/json/trasy.inc.php?gmvid=\(gmvid)"
+        Alamofire.request(url, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                if let geoJson = GeoJSON(json: json), let routes = RoutesCollection(with: geoJson) {
+                    self.delegate?.manager(manager: self, didDownload: routes)
+                }
+            case .failure(let error):
+                self.delegate?.manager(manager: self, didFailWith: error)
             }
         }
     }

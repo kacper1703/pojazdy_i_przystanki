@@ -61,7 +61,7 @@ enum StoryboardScene {
   enum Main: StoryboardType {
     static let storyboardName = "Main"
 
-    static let initialScene = InitialSceneType<UITabBarController>(storyboard: Main.self)
+    static let initialScene = InitialSceneType<Pojazdy_i_Przystanki.ViewController>(storyboard: Main.self)
 
     static let detailViewController = SceneType<Pojazdy_i_Przystanki.DetailViewController>(storyboard: Main.self, identifier: "detailViewController")
 

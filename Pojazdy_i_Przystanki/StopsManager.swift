@@ -73,7 +73,14 @@ class StopsManager {
         Alamofire.request(url).responseData() { (response: DataResponse<Data>) in
             if let data = response.data, let utf8Text = String(data: data, encoding: String.Encoding.utf8) {
                 let departures = StopDepartures.init(with: utf8Text)
-                self.delegate?.manager(manager: self, didDownloadDepartures: departures)
+                if let errorDesc = departures.error {
+                    let error = NSError.init(domain: "DeparturesDomain",
+                                             code: 0,
+                                             userInfo: [NSLocalizedDescriptionKey: errorDesc])
+                    self.delegate?.manager(manager: self, didFailWith: error)
+                } else {
+                    self.delegate?.manager(manager: self, didDownloadDepartures: departures)
+                }
             }
 
             if let error = response.error {

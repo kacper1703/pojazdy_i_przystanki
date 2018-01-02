@@ -129,6 +129,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, DrawerCoordinating {
         _ = detailViewController.view
         if let vehicle = vehicle {
             detailViewController.configure(with: vehicle)
+            vehiclesManager?.getRouteFor(gmvid: "\(vehicle.gmvid)")
         }
         var config = DrawerConfiguration()
         config.fullExpansionBehaviour = .dosNotCoverStatusBar
@@ -152,7 +153,7 @@ extension ViewController: LinePickerDelegate {
 
 extension ViewController: StopsManagerDelegate {
     func manager(manager: StopsManager, didDownloadDepartures: StopDepartures) {
-
+        
     }
 
     func manager(manager: StopsManager, didSet stops: [Stop]) {
@@ -184,6 +185,19 @@ extension ViewController: StopsManagerDelegate {
 }
 
 extension ViewController: VehiclesManagerDelegate {
+    func manager(manager: VehiclesManager, didDownload routesCollection: RoutesCollection) {
+        let firstRoute = routesCollection.routes.first!
+        let polyline = firstRoute.polyline
+        let redYellow = GMSStrokeStyle.gradient(from: .red, to: .yellow)
+        polyline.spans = [GMSStyleSpan(style: redYellow)]
+        polyline.strokeWidth = 10
+        polyline.map = self.mapView
+
+        let bounds = GMSCoordinateBounds(path: polyline.path!)
+        let camera = mapView.camera(for: bounds, insets: UIEdgeInsets())!
+        mapView.animate(to: camera)
+    }
+
     func manager(manager: VehiclesManager, didSet vehicles: [Vehicle]) {
         if mapView.selectedMarker == nil {
             setupVehicleClusters(with: vehicles)
@@ -219,18 +233,13 @@ extension ViewController: VehiclesManagerDelegate {
         guard let selectedMarker = self.selectedMarker else { return }
 
         if let vehicle = selectedMarker.userData as? Vehicle {
-//            let newCamera = GMSCameraPosition.camera(withTarget: vehicle.position,
-//                                                     zoom: mapView.camera.zoom)
-//            let update = GMSCameraUpdate.setCamera(newCamera)
-//            mapView.animate(with: update)
             mapView.animate(toLocation: vehicle.position)
             if let detailVC = self.presentedViewController as? DetailViewController {
                 detailVC.configure(with: vehicle)
             }
+        } else if let stop = selectedMarker.userData as? Stop {
+            mapView.animate(toLocation: stop.position)
         }
-//        else let stop = selectedMarker.userData as? Stop {
-//            mapView.animate(toLocation: stop.position)
-//        }
     }
 }
 

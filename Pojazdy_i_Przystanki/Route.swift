@@ -8,60 +8,31 @@
 
 import Alamofire
 import CoreLocation
-import ObjectMapper
 import Foundation
 import GoogleMaps
 
-typealias DepartureInfo = (line: String, heading: String, time: String)
-
-class StopDepartures: NSObject {
-    private (set) var departures: [DepartureInfo]?
-    private (set) var error: String?
-
-    init(with string: String) {
-        let cleanedText = string.replacingOccurrences(of: "&nbsp;", with: " ")
-        guard let body = cleanedText.slice(from: "<tbody>", to: "</tbody>") else { return }
-        let departuresStringArray = body.components(separatedBy: "<tr>")
-        let departuresArray = departuresStringArray.flatMap { (element) -> (String, String, String)? in
-            guard let line = element.slice(from: "\"gmvlinia\">", to: "</td>"),
-                let heading = element.slice(from: "\"gmvkierunek\">", to: "</td>"),
-                let time = element.slice(from: "\"gmvgodzina\">", to: "</td>") else { return nil }
-            return (line, heading, time)
+class Route {
+    init?(with geoJson: GeoJSON?) {
+        guard let geoJson = geoJson else { return nil }
+        guard let points: [Point] = geoJson.lineString?.points else { return nil }
+        guard !points.isEmpty else { return nil }
+        self.coordinates = points.map({ $0.clLocationCoordinate })
+    }
+    let coordinates: [CLLocationCoordinate2D]
+    var start: CLLocationCoordinate2D { return coordinates.first! }
+    var end: CLLocationCoordinate2D { return coordinates.last! }
+    var polyline: GMSPolyline {
+        let path = GMSMutablePath()
+        for coordinate in coordinates {
+            path.add(coordinate)
         }
-        self.error = departuresStringArray.first?.slice(from: "gmvblad\">", to: "</td>")
-        self.departures = departuresArray
+        return GMSPolyline(path: path)
     }
-
-    required init?(map: Map) {
-        return nil
-    }
-
-    func mapping(map: Map) {
-
-//        coordinates <- map["coordinates"]
+    var polylineReversed: GMSPolyline {
+        let path = GMSMutablePath()
+        for coordinate in coordinates.reversed() {
+            path.add(coordinate)
+        }
+        return GMSPolyline(path: path)
     }
 }
-
-//class Routes: NSObject, Mappable {
-//    private (set) var coordinates: [CLLocationCoordinate2D]
-//
-//    required init?(map: Map) {
-//        <#code#>
-//    }
-//
-//    func mapping(map: Map) {
-//        coordinates <- map["coordinates"]
-//    }
-//}
-
-extension String {
-
-    func slice(from: String, to: String) -> String? {
-        return (range(of: from)?.upperBound).flatMap { substringFrom in
-            (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
-                String(self[substringFrom..<substringTo])
-            }
-        }
-    }
-}
-

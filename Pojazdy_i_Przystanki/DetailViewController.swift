@@ -9,6 +9,10 @@
 import Foundation
 import DrawerKit
 
+fileprivate enum DrawerMode {
+    case vehicle(with: Vehicle), stop(with: Stop)
+}
+
 class DetailViewController: UIViewController {
     @IBOutlet private var lineLabel: UILabel!
     @IBOutlet private var punctualityLabel: UILabel!
@@ -23,22 +27,31 @@ class DetailViewController: UIViewController {
     @IBOutlet private var visualEffectView: UIVisualEffectView!
 
     @IBAction func routeButtonTapped() {
-
+        if case DrawerMode.vehicle(with: let vehicle) = self.mode! {
+            
+        }
     }
 
     @IBOutlet var partialDrawerSeparator: UIView!
 
+    private var mode: DrawerMode?
+
     func configure(with vehicle: Vehicle) {
+        self.mode = .vehicle(with: vehicle)
         lineLabel.text = vehicle.line
         punctualityLabel.text = vehicle.punctuality.description
         previousStopLabel.text = vehicle.previousStop.isEmpty ? "n/a" : vehicle.previousStop
         nextStopLabel.text = vehicle.nextStop.isEmpty ? "n/a" : vehicle.nextStop
         routeLabel.text = String(describing: vehicle.route)
-        self.view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
     }
 
-    func aconfigure(with stop: Stop) {
+    func configure(with stop: Stop, departures: StopDepartures) {
+        self.mode = .stop(with: stop)
+    }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
     }
 
     override func viewDidLayoutSubviews() {
@@ -49,6 +62,12 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: DrawerPresentable {
     var heightOfPartiallyExpandedDrawer: CGFloat {
-        return partialDrawerSeparator.frame.maxY
+        guard let mode = mode else { return self.view.frame.height }
+        switch mode {
+        case .stop:
+            return partialDrawerSeparator.frame.maxY
+        case .vehicle:
+            return partialDrawerSeparator.frame.maxY
+        }
     }
 }
