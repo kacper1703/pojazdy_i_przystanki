@@ -227,6 +227,7 @@
 				72844AA01EEEB14800D3DEC9 /* AppDelegate.swift */,
 				72844AA21EEEB14800D3DEC9 /* ViewController.swift */,
 				72180B531FC4A3E400DECAA7 /* ARViewController.swift */,
+				727524711EEFFCDA007C5EB3 /* StopAnnotation.swift */,
 				72AFE5F21FC18C07004B8006 /* DetailViewController.swift */,
 				722F73901EF40CD900833065 /* LinePickerViewController.swift */,
 				72844AA41EEEB14800D3DEC9 /* Main.storyboard */,
@@ -249,7 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				727902301EEFDE8E00CAF195 /* VehicleAnnotation.swift */,
-				727524711EEFFCDA007C5EB3 /* StopAnnotation.swift */,
 				7279022C1EEFCE4400CAF195 /* VehicleAnnotationView.swift */,
 				7279022E1EEFCED400CAF195 /* VehicleAnnotationView.xib */,
 				72947B331EF3CF1F0015819C /* LayerPickerViewController.swift */,

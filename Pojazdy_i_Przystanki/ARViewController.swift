@@ -23,14 +23,15 @@ class CameraViewController: UIViewController {
         arViewController.uiOptions.debugLabel = true
         arViewController.uiOptions.debugMap = true
         arViewController.presenter.maxDistance = 200
+        arViewController.presenter.maxVisibleAnnotations = 30
         arViewController.presenter.distanceOffsetMode = .none
         arViewController.presenter.presenterTransform = ARPresenterStackTransform()
         arViewController.interfaceOrientationMask = .portrait
-        arViewController.presenter.maxVisibleAnnotations = 30
         arViewController.trackingManager.headingFilterFactor = 0.5
-        arViewController.trackingManager.pitchFilterFactor = 0.1
+        arViewController.trackingManager.allowCompassCalibration = true
+        arViewController.trackingManager.pitchFilterFactor = 0.3
         arViewController.onDidFailToFindLocation = { [weak self] elapsedSeconds, _ in
-            if elapsedSeconds > 30 {
+            if elapsedSeconds > 10 {
                 //show alert
             }
         }
@@ -48,6 +49,7 @@ extension CameraViewController: ARDataSource {
         guard let stop = stopsManager?.stopWith(id: viewForAnnotation.identifier) else { fatalError() }
         let annotationView = StopAnnotation(with: stop)
         annotationView.frame = CGRect(x: 0, y: 0, width: 250, height: 50)
+//        annotationView.centerOffset = CGPoint(x: 0.5, y: 1.0)
         annotationView.annotation = viewForAnnotation
         return annotationView
     }
@@ -57,7 +59,7 @@ extension CameraViewController: StopsManagerDelegate {
     func manager(manager: StopsManager, didSet stops: [Stop]) {
         let places = stops.flatMap({ stop -> ARAnnotation? in
             return ARAnnotation(identifier: String(stop.id),
-                                title: stop.name!,
+                                title: stop.name,
                                 location: stop.positionNon2D)
         })
         arViewController.setAnnotations(places)

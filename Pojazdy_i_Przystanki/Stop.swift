@@ -13,7 +13,7 @@ import GoogleMaps
 
 class Stop: NSObject, Mappable, GMUClusterItem {
     private (set) var id: Int
-    private (set) var name: String?
+    private (set) var name: String
     private (set) var latitude: Double
     private (set) var longitude: Double
     private (set) var setNumber: String
@@ -21,6 +21,7 @@ class Stop: NSObject, Mappable, GMUClusterItem {
 
     required init?(map: Map) {
         guard let id = map.JSON["id"] as? Int,
+            let name = map.JSON["nazwa"] as? String,
             let lat = map.JSON["szerokoscgeo"] as? Double,
             let lon = map.JSON["dlugoscgeo"] as? Double,
             let setNumber = map.JSON["nrzespolu"] as? Int,
@@ -28,6 +29,7 @@ class Stop: NSObject, Mappable, GMUClusterItem {
             return nil
         }
         self.id = id
+        self.name = name
         self.latitude = lat
         self.longitude = lon
         self.poleNumber = poleNumber

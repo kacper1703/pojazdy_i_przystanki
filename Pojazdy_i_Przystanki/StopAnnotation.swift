@@ -28,40 +28,44 @@ class StopAnnotation: ARAnnotationView {
     }
 
     func commonInit() {
+        guard let stop = stop, let annotation = annotation else { return }
+
         titleLabel?.removeFromSuperview()
         distanceLabel?.removeFromSuperview()
 
-        let label = UILabel(frame: CGRect(x: 10,
+        let newTitleLabel = UILabel(frame: CGRect(x: 10,
                                           y: 0,
                                           width: self.frame.size.width,
                                           height: 30))
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.numberOfLines = 1
-        label.textColor = UIColor.white
-        self.addSubview(label)
-
-        self.titleLabel = label
+        newTitleLabel.font = UIFont.systemFont(ofSize: 16)
+        newTitleLabel.numberOfLines = 1
+        newTitleLabel.textColor = UIColor.white
+        newTitleLabel.text = "\(stop.name ?? "") \(stop.poleNumber)"
+        newTitleLabel.sizeToFit()
+        self.addSubview(newTitleLabel)
 
         let newDistanceLabel = UILabel(frame: CGRect(x: 10,
-                                                     y: label.frame.maxY + 2,
+                                                     y: newTitleLabel.frame.maxY + 2,
                                                      width: self.frame.size.width,
                                                      height: 20))
         newDistanceLabel.textColor = UIColor.green
         newDistanceLabel.font = UIFont.systemFont(ofSize: 12)
-
+        newDistanceLabel.text = String(format: "%.0f m", annotation.distanceFromUser)
+        newDistanceLabel.sizeToFit()
         self.addSubview(newDistanceLabel)
+
+        let width = max(newTitleLabel.frame.width, newDistanceLabel.frame.width) + 20
+        let height = newTitleLabel.frame.height + newDistanceLabel.frame.height + 2
+
+        self.titleLabel = newTitleLabel
         self.distanceLabel = newDistanceLabel
 
-        if let stop = stop, let annotation = annotation {
-            titleLabel?.text = "\(stop.name ?? "") \(stop.poleNumber)"
-            newDistanceLabel.text = String(format: "%.0f m", annotation.distanceFromUser)
-            titleLabel?.sizeToFit()
-            let selfSizedFrame = CGRect(origin: self.frame.origin.offset(by: -10, dy: 0),
-                                        size: CGSize(width: label.frame.width + 20,
-                                                     height: self.frame.height))
-            self.frame = selfSizedFrame
-            self.backgroundColor = UIColor(white: 0.3, alpha: 0.7)
-        }
+        let selfSizedFrame = CGRect(origin: self.frame.origin.offset(by: -10, dy: 0),
+                                    size: CGSize(width: width,
+                                                 height: height))
+        self.frame = selfSizedFrame
+        self.backgroundColor = UIColor(white: 0.3, alpha: 0.7)
+
     }
 }
 
