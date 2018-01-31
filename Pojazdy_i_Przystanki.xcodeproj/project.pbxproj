@@ -12,6 +12,7 @@
 		7204D9701EEEB24E00E59437 /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7204D96F1EEEB24E00E59437 /* Stop.swift */; };
 		7204D9721EEEB2FD00E59437 /* LineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7204D9711EEEB2FD00E59437 /* LineType.swift */; };
 		7204D9741EEEB75B00E59437 /* VehicleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7204D9731EEEB75B00E59437 /* VehicleManager.swift */; };
+		7216809A202080D000116724 /* Map+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72168099202080D000116724 /* Map+Extensions.swift */; };
 		72180B541FC4A3E400DECAA7 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72180B531FC4A3E400DECAA7 /* ARViewController.swift */; };
 		722F738F1EF407EB00833065 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 722F738E1EF407EB00833065 /* Assets.xcassets */; };
 		722F73911EF40CD900833065 /* LinePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722F73901EF40CD900833065 /* LinePickerViewController.swift */; };
@@ -67,6 +68,7 @@
 		7204D96F1EEEB24E00E59437 /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		7204D9711EEEB2FD00E59437 /* LineType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineType.swift; sourceTree = "<group>"; };
 		7204D9731EEEB75B00E59437 /* VehicleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleManager.swift; sourceTree = "<group>"; };
+		72168099202080D000116724 /* Map+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map+Extensions.swift"; sourceTree = "<group>"; };
 		72180B531FC4A3E400DECAA7 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		722F738E1EF407EB00833065 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		722F73901EF40CD900833065 /* LinePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePickerViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				727524801EF0140E007C5EB3 /* Bundle+LoadFromNib.swift */,
 				727524821EF11EE2007C5EB3 /* Iterable.swift */,
 				72B3A1A21FF3B1BA00D331E5 /* String+Extensions.swift */,
+				72168099202080D000116724 /* Map+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				7293B28F1FB84FF30023AF7E /* GMUGridBasedClusterAlgorithm.m in Sources */,
 				7204D9721EEEB2FD00E59437 /* LineType.swift in Sources */,
 				72844AA11EEEB14800D3DEC9 /* AppDelegate.swift in Sources */,
+				7216809A202080D000116724 /* Map+Extensions.swift in Sources */,
 				7293B2951FB84FF30023AF7E /* GMUStaticCluster.m in Sources */,
 				72848DA01FB981AA004A9CA2 /* VehicleDetailsView.swift in Sources */,
 				727902311EEFDE8E00CAF195 /* VehicleAnnotation.swift in Sources */,

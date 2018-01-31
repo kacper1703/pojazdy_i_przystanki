@@ -92,4 +92,3 @@ final class GeoJSON {
 extension NSNull: GeoJSONDecodable {
     public var prefix: String { return "" }
 }
-

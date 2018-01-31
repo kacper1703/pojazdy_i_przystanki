@@ -12,52 +12,59 @@ protocol LinePickerDelegate: class {
     func pickerDidSelect(lines: [String])
 }
 
-class LinePickerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LinePickerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     weak var delegate: LinePickerDelegate?
+
+    let columnsCount: CGFloat = 5.0
+    let spacing: CGFloat = 5.0
 
     var lines: [String] = [] {
         didSet {
             linesDataSource = lines.map({ (line) -> (Bool, String) in
                 return (false, line)
             })
-            tableView?.reloadData()
+            collectionView?.reloadData()
         }
     }
-    fileprivate var linesDataSource: [(selected: Bool, line: String)] = []
+    fileprivate var linesDataSource: [(isSelected: Bool, line: String)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lines.count
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return linesDataSource.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "lineCell", for: indexPath)
-        cell.textLabel?.text = linesDataSource[indexPath.item].line
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "lineCell", for: indexPath) as? LineCell else { return UICollectionViewCell() }
+        let item = linesDataSource[indexPath.item]
+        cell.configure(text: item.line)
+        cell.isSelected = item.isSelected
+
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
-            linesDataSource[indexPath.item].selected = true
-            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            linesDataSource[indexPath.item].isSelected = true
+            cell.isSelected = true
         }
     }
 
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
-            linesDataSource[indexPath.item].selected = false
-            cell.accessoryType = UITableViewCellAccessoryType.none
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            linesDataSource[indexPath.item].isSelected = false
+            cell.isSelected = false
         }
     }
 
@@ -68,5 +75,31 @@ class LinePickerViewController: UIViewController, UITableViewDelegate, UITableVi
         delegate?.pickerDidSelect(lines: selectedLines)
         self.dismiss(animated: true, completion: nil)
     }
+}
 
+extension LinePickerViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemWidth = (collectionView.frame.width - (spacing * columnsCount - 1)) / columnsCount
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return spacing
+    }
+}
+
+class LineCell: UICollectionViewCell {
+    @IBOutlet var label: UILabel!
+
+    func configure(text: String) {
+        self.label.text = text
+    }
+
+    override var isSelected: Bool {
+        didSet {
+            self.backgroundColor = isSelected ? UIColor.lightGray : UIColor.clear
+        }
+    }
 }

@@ -44,11 +44,11 @@ class ViewController: UIViewController, GMSMapViewDelegate, DrawerCoordinating {
         }
     }
 
-
     var stopsManager: StopsManager?
     var vehiclesManager: VehiclesManager?
     private var stopsClusterManager: GMUClusterManager!
     private var vehicleClusterManager: GMUClusterManager!
+    private var smallAnnotationManager: SmallVehicleAnnotationManager = SmallVehicleAnnotationManager()
     private var selectedMarker: GMSMarker? { didSet {
         print("new value: \(String(describing: selectedMarker?.userData))")
         }
@@ -129,7 +129,7 @@ class ViewController: UIViewController, GMSMapViewDelegate, DrawerCoordinating {
         _ = detailViewController.view
         if let vehicle = vehicle {
             detailViewController.configure(with: vehicle)
-            vehiclesManager?.getRouteFor(gmvid: "\(vehicle.gmvid)")
+//            vehiclesManager?.getRouteFor(gmvid: "\(vehicle.gmvid)")
         }
         var config = DrawerConfiguration()
         config.fullExpansionBehaviour = .dosNotCoverStatusBar
@@ -147,13 +147,13 @@ class ViewController: UIViewController, GMSMapViewDelegate, DrawerCoordinating {
 
 extension ViewController: LinePickerDelegate {
     func pickerDidSelect(lines: [String]) {
-
+        let vehicles = vehiclesManager!.vehicles(withLineNumbers: lines)
+        setupVehicleClusters(with: vehicles)
     }
 }
 
 extension ViewController: StopsManagerDelegate {
     func manager(manager: StopsManager, didDownloadDepartures: StopDepartures) {
-        
     }
 
     func manager(manager: StopsManager, didSet stops: [Stop]) {
@@ -180,7 +180,6 @@ extension ViewController: StopsManagerDelegate {
     }
 
     func manager(manager: StopsManager, didFailWith error: Error) {
-
     }
 }
 
@@ -248,7 +247,9 @@ extension ViewController: GMUClusterRendererDelegate, DrawerAnimationParticipant
         if marker.userData is Stop {
             marker.icon = Asset.stop.image
         } else if let vehicle = marker.userData as? Vehicle {
-            marker.icon = vehicle.icon
+            marker.icon = smallAnnotationManager.annotationImage(with: vehicle)
+            marker.tracksViewChanges = false
+            marker.groundAnchor = CGPoint(x: 0, y: 1)
         }
     }
 
@@ -264,7 +265,7 @@ extension ViewController: GMUClusterRendererDelegate, DrawerAnimationParticipant
 extension ViewController: GMUClusterManagerDelegate {
     func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
         let newCamera = GMSCameraPosition.camera(withTarget: cluster.position,
-                                                 zoom: mapView.camera.zoom + 1)
+                                                 zoom: mapView.camera.zoom + 2)
         let update = GMSCameraUpdate.setCamera(newCamera)
         mapView.animate(with: update)
         return true

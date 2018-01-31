@@ -72,6 +72,4 @@ extension CameraViewController: StopsManagerDelegate {
     func manager(manager: StopsManager, didDownloadDepartures: StopDepartures) {
 
     }
-
-
 }

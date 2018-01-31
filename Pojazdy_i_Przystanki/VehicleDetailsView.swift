@@ -93,7 +93,4 @@ class VehicleDetailsView: UIView {
 //            sender.setTranslation(CGPoint(x: 0, y: 0), in: self)
 //        }
     }
-
-
-
 }

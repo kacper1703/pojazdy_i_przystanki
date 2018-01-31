@@ -20,7 +20,7 @@ extension Bundle {
 
 extension UIView {
     @discardableResult
-    func loadFromNib<T : UIView>() -> T? {
+    func loadFromNib<T: UIView>() -> T? {
         guard let contentView = Bundle.main.loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? T else { return nil }
         self.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false

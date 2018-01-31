@@ -63,13 +63,8 @@ class VehiclesManager {
     }
 
     func allLines() -> [String] {
-        var lines: [String] = []
-        for vehicle in vehicles {
-            if lines.contains(vehicle.line) {
-                lines.append(vehicle.line)
-            }
-        }
-        return lines
+        var lines: [String] = vehicles.map({ $0.line })
+        return lines.removingDuplicates.sorted()
     }
 
     func pause() {
@@ -115,5 +110,19 @@ class VehiclesManager {
                 self.delegate?.manager(manager: self, didFailWith: error)
             }
         }
+    }
+}
+
+extension Array where Element:Equatable {
+    var removingDuplicates: [Element] {
+        var result = [Element]()
+
+        for value in self {
+            if result.contains(value) == false {
+                result.append(value)
+            }
+        }
+
+        return result
     }
 }

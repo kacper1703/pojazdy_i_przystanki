@@ -26,7 +26,20 @@ class Vehicle: NSObject, Mappable, GMUClusterItem {
         return CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
 
-    private enum VehicleKeys: String, Iterable {
+    var shortDescription: String {
+        switch self.punctuality.amount {
+        case 0:
+            return "0"
+        case let a where a > 0:
+            return "+\(a)"
+        case let a where a < 0:
+            return "-\(a)"
+        default:
+            return ""
+        }
+    }
+
+    private enum VehicleKeys: String {
         case id = "id"
         case line = "linia"
         case lineType = "typlinii"
@@ -41,18 +54,19 @@ class Vehicle: NSObject, Mappable, GMUClusterItem {
     }
 
     required init?(map: Map) {
-        if let id = map[VehicleKeys.id.rawValue].currentValue as? String,
-            let line = map[VehicleKeys.line.rawValue].currentValue as? String,
+        if let id = map[VehicleKeys.id.rawValue].stringValue,
+            let line = map[VehicleKeys.line.rawValue].stringValue,
             let lineType = LineType(with: map[VehicleKeys.lineType.rawValue].currentValue),
-            let route = map[VehicleKeys.route.rawValue].currentValue as? String,
+            let route = map[VehicleKeys.route.rawValue].stringValue,
             let routeInt = Int(route),
-            let nextStop = map[VehicleKeys.nextStop.rawValue].currentValue as? String,
-            let previousStop = map[VehicleKeys.previousStop.rawValue].currentValue as? String,
-            let latitude = map[VehicleKeys.latitude.rawValue].currentValue as? String,
+            let nextStop = map[VehicleKeys.nextStop.rawValue].stringValue,
+            let previousStop = map[VehicleKeys.previousStop.rawValue].stringValue,
+            let latitude = map[VehicleKeys.latitude.rawValue].stringValue,
             let latDouble = Double(latitude),
-            let longitude = map[VehicleKeys.longitude.rawValue].currentValue as? String,
+            let longitude = map[VehicleKeys.longitude.rawValue].stringValue,
             let lonDouble = Double(longitude),
-            let punctuality1 = map[VehicleKeys.punctuality1.rawValue].currentValue as? String,
+            let punctuality1 = map[VehicleKeys.punctuality1.rawValue].stringValue,
+            let punctuality2 = Vehicle.punctuality(from: map[VehicleKeys.punctuality2.rawValue].currentValue),
             let gmvid = map[VehicleKeys.gmvid.rawValue].currentValue as? Int {
             self.id = id
             self.line = line
@@ -61,7 +75,7 @@ class Vehicle: NSObject, Mappable, GMUClusterItem {
             self.nextStop = nextStop.isEmpty ? "n/a" : nextStop
             self.previousStop = previousStop.isEmpty ? "n/a" : previousStop
             self.coordinate = (latDouble, lonDouble)
-            self.punctuality = (punctuality1, 0)
+            self.punctuality = (punctuality1, punctuality2)
             self.gmvid = gmvid
         } else {
             return nil
@@ -103,6 +117,42 @@ class Vehicle: NSObject, Mappable, GMUClusterItem {
         case .busNormal: return UIColor(red:0.5137, green:0.7294, blue:0.1373, alpha:1.0000)
         case .tramNormal: return UIColor(red:0.0980, green:0.6157, blue:0.8549, alpha:1.0000)
         case .temporary: return UIColor(red:0.9922, green:0.7686, blue:0.2314, alpha:1.0000)
+        }
+    }
+
+    var annotationColors: (backgroundColor: UIColor, textColor: UIColor) {
+        if self.lineType == .busNight {
+            return (.black, lineColor)
+        } else {
+            return (.white, lineColor)
+        }
+    }
+
+    func update(with map: Map) {
+        if let nextStop = map[VehicleKeys.nextStop.rawValue].stringValue,
+        let previousStop = map[VehicleKeys.previousStop.rawValue].stringValue,
+        let latitude = map[VehicleKeys.latitude.rawValue].stringValue,
+        let latDouble = Double(latitude),
+        let longitude = map[VehicleKeys.longitude.rawValue].stringValue,
+        let lonDouble = Double(longitude),
+        let punctuality1 = map[VehicleKeys.punctuality1.rawValue].stringValue,
+            let punctuality2 = Vehicle.punctuality(from: map[VehicleKeys.punctuality2.rawValue].currentValue) {
+            self.nextStop = nextStop
+            self.previousStop = previousStop
+            self.coordinate = (latDouble, lonDouble)
+            self.punctuality = (punctuality1, punctuality2)
+        }
+    }
+
+    static private func punctuality(from value: Any?) -> Int? {
+        guard let string = value as? String else { return nil }
+
+        if string.contains("&plus;") {
+            return Int(string.replacingOccurrences(of: "&plus;", with: ""))
+        } else if string.contains("&minus;") {
+            return Int(string.replacingOccurrences(of: "&minus;", with: ""))
+        } else {
+            return Int(string)
         }
     }
 }

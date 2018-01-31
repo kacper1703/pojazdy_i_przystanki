@@ -28,7 +28,6 @@ class DetailViewController: UIViewController {
 
     @IBAction func routeButtonTapped() {
         if case DrawerMode.vehicle(with: let vehicle) = self.mode! {
-            
         }
     }
 
@@ -43,6 +42,7 @@ class DetailViewController: UIViewController {
         previousStopLabel.text = vehicle.previousStop.isEmpty ? "n/a" : vehicle.previousStop
         nextStopLabel.text = vehicle.nextStop.isEmpty ? "n/a" : vehicle.nextStop
         routeLabel.text = String(describing: vehicle.route)
+        view.backgroundColor = vehicle.lineColor.withAlphaComponent(0.1)
     }
 
     func configure(with stop: Stop, departures: StopDepartures) {
@@ -51,7 +51,6 @@ class DetailViewController: UIViewController {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
     }
 
     override func viewDidLayoutSubviews() {

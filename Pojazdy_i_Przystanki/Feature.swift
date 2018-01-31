@@ -11,7 +11,7 @@ import SwiftyJSON
 
 final class Feature: GeoJSONDecodable {
     public var prefix: String { return "" }
-    private (set) var geometry: GeoJSON? = nil
+    private (set) var geometry: GeoJSON?
     private (set) var properties: JSON?
     public var identifier: String?
 

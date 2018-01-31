@@ -27,7 +27,7 @@ final class FeatureCollection: GeoJSONDecodable {
             return nil
         }
     }
-    
+
     public var prefix: String { return "" }
 }
 
